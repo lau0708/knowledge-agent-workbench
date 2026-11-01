@@ -1,0 +1,122 @@
+{
+    "evaluation_info": {
+        "model": "deepseek-chat",
+        "prompt_version": "v1",
+        "threshold_version": "v1",
+        "thresholds": {
+            "faithfulness": 0.7,
+            "relevance": 0.7,
+            "completeness": 0.5
+        }
+    },
+    "summary": {
+        "total": 4,
+        "passed": 4,
+        "failed": 0,
+        "accuracy": 1.0
+    },
+    "dimension_metrics": {
+        "faithfulness": {
+            "tp": 2,
+            "fp": 0,
+            "tn": 2,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "accuracy": 1.0
+        },
+        "relevance": {
+            "tp": 2,
+            "fp": 0,
+            "tn": 2,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "accuracy": 1.0
+        },
+        "completeness": {
+            "tp": 2,
+            "fp": 0,
+            "tn": 2,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "accuracy": 1.0
+        }
+    },
+    "cases": [
+        {
+            "case_id": "case_001",
+            "type": "normal",
+            "scores": {
+                "faithfulness": 1.0,
+                "relevance": 1.0,
+                "completeness": 1.0
+            },
+            "reason": "答案准确复述了参考资料中关于Embedding的核心定义（将文本转换为向量）、语义相似文本具有更接近向量表示的特性，以及向量可用于知识库语义检索的用途，所有事实性陈述均有参考资料支持；答案直接回应用户'什么是Embedding'的问题，未跑题；答案覆盖了定义、核心特性和主要用途，已完整回答用户问题所必需的核心信息。",
+            "expected_issues": [],
+            "predicted_issues": [],
+            "passed": true
+        },
+        {
+            "case_id": "case_002",
+            "type": "unfaithful",
+            "scores": {
+                "faithfulness": 0.3,
+                "relevance": 0.9,
+                "completeness": 0.7
+            },
+            "reason": "答案正确指出 Embedding 是将文本转换为向量的技术，符合参考资料。但声称'保证所有语义相似的文本具有完全相同的向量'与参考资料中'语义相似的文本通常具有更接近的向量表示'矛盾，属于无依据且错误的陈述，因此忠实度较低。答案直接回应用户问题，相关性高。核心信息（文本转向量）已覆盖，但包含错误断言，完整性中等。",
+            "expected_issues": [
+                "faithfulness"
+            ],
+            "predicted_issues": [
+                "faithfulness"
+            ],
+            "passed": true
+        },
+        {
+            "case_id": "case_003",
+            "type": "irrelevant",
+            "scores": {
+                "faithfulness": 1.0,
+                "relevance": 0.0,
+                "completeness": 0.0
+            },
+            "reason": "答案内容完全来自参考资料2，事实性陈述有参考资料支持，因此忠实度为1.0。但答案解释的是RAG而非Embedding，完全没有回应用户关于Embedding的问题，因此相关性为0.0，完整性也为0.0。",
+            "expected_issues": [
+                "relevance",
+                "completeness"
+            ],
+            "predicted_issues": [
+                "relevance",
+                "completeness"
+            ],
+            "passed": true
+        },
+        {
+            "case_id": "case_004",
+            "type": "multiple_issues",
+            "scores": {
+                "faithfulness": 0.2,
+                "relevance": 0.0,
+                "completeness": 0.0
+            },
+            "reason": "答案中关于Embedding的陈述（所有文本转换为完全相同的向量）与参考资料矛盾（参考资料说语义相似的文本向量更接近），且RAG是SQL技术的说法完全无依据；答案讨论的是RAG和SQL，而非Embedding是什么，未回应用户问题；答案没有提供任何关于Embedding定义的正确核心信息。",
+            "expected_issues": [
+                "faithfulness",
+                "relevance",
+                "completeness"
+            ],
+            "predicted_issues": [
+                "faithfulness",
+                "relevance",
+                "completeness"
+            ],
+            "passed": true
+        }
+    ]
+}
